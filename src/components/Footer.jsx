@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='flex flex-row justify-between items-center'>
+    <footer className='flex flex-row justify-between items-center px-[20px] pt-[60px] pb-[100px] border-t-[1px] border-[#484848]'>
 
       <section className='flex flex-row gap-[10px] items-center cursor-pointer'>
         <img src="src\assets\headphones.png" alt="Logo" className='w-[30px]' />
