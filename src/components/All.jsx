@@ -1,6 +1,7 @@
 import React from 'react'
 import AlbumCard from './AlbumCard'
 import ArtistCard from './ArtistCard'
+import { Link } from 'react-router-dom'
 
 const All = () => {
   return (
@@ -9,8 +10,8 @@ const All = () => {
       <div className="flex flex-col gap-[20px]">
 
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Artists</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/popularArtists" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Artists</Link>
+          <Link to="/home/popularArtists"  className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
 
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
@@ -27,8 +28,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Albums</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/popularAlbums" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Albums</Link>
+          <Link to="/home/popularAlbums" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
       
@@ -43,8 +44,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Radio</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Radio</Link>
+          <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           <AlbumCard/>
@@ -57,8 +58,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Featured Charts</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/featuredCharts" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Featured Charts</Link>
+          <Link to="/home/featuredCharts" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           <AlbumCard/>
@@ -71,8 +72,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Spotify Playlists</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/musicPlayerPlaylists" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Music Player Playlists</Link>
+          <Link to="/home/musicPlayerPlaylists" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           <AlbumCard/>
@@ -85,8 +86,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Spotify Original Podcasts</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to="/home/originalPodcasts" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Original Podcasts</Link>
+          <Link to="/home/originalPodcasts" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           <AlbumCard/>
@@ -99,8 +100,8 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <h4 className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Trending Episodes</h4>
-          <h4 className="hover:cursor-pointer hover:underline ">Show all</h4>
+          <Link to='/home/trendingEpisodes' className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Trending Episodes</Link>
+          <Link to='/home/trendingEpisodes' className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           <AlbumCard/>
