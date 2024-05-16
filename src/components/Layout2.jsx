@@ -7,6 +7,7 @@ const Layout2 = () => {
     <section className="route w-3/4 flex flex-col justify-start gap-[10px] rounded-lg bg-gradient-to-r from-[#140404] to-black h-[517px] ">
       <Header1/>
       <Outlet/>
+      
     </section>
   )
 }
