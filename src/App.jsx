@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './components/Home';
@@ -20,7 +20,25 @@ import PopularAlbums from './components/PopularAlbums';
 import TrendingEpisodes from './components/TrendingEpisodes';
 
 const App = () => {
-  return (
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    const hash = window.location.hash;
+    window.location.hash = "";
+    if (!token && hash) {
+      const _token = hash.split("&")[0].split("=")[1];
+      window.localStorage.setItem("token", _token);
+      setToken(_token);
+    } else {
+      setToken(token);
+    }
+  }, []);
+  
+
+  return !token ? (
+  <Login/>
+) : (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -56,25 +74,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-// import React from 'react'
-// import Sidebar from './components/Sidebar'
-// import { Outlet } from 'react-router-dom'
-
-// const App = () => {
-//   return (
-//     <section className="main w-full px-[10px] py-[10px] flex flex-row bg-[#000000] text-white h-screen gap-[10px] scrollbar-thin scrollbar-track-black scrollbar-thumb-[#1c0707]">
-//       <Sidebar/>
-//       <Outlet />
-//     </section>
-//   )
-// }
-
-// export default App
