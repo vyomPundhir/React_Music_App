@@ -18,6 +18,7 @@ import MusicPlayerPlaylists from './components/MusicPlayerPlaylists';
 import OriginalPodcasts from './components/OriginalPodcasts';
 import PopularAlbums from './components/PopularAlbums';
 import TrendingEpisodes from './components/TrendingEpisodes';
+import { setClientToken } from './spotify';
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -30,8 +31,10 @@ const App = () => {
       const _token = hash.split("&")[0].split("=")[1];
       window.localStorage.setItem("token", _token);
       setToken(_token);
+      setClientToken(_token)
     } else {
       setToken(token);
+      setClientToken(token);
     }
   }, []);
   
@@ -42,7 +45,6 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-
           <Route path="home/" element={<Home />}>
             <Route path="all" element={<All />} />
             <Route path="music" element={<Music />} />
