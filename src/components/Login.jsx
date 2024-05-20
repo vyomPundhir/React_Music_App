@@ -1,7 +1,8 @@
 import React from 'react'
 import headphones from '../assets/headphones.png'
 import Footer from './Footer'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import { loginEndpoint } from '../spotify'
 
 const Login = () => {
   return (
@@ -19,21 +20,21 @@ const Login = () => {
 
           <form action="" className="w-[330px] flex flex-col gap-[20px] border-[1px] border-[#575757] rounded-lg px-[30px] pb-[30px] pt-[20px]">
 
-            <div className="flex flex-col justify-start items-start gap-[5px]">
+            {/* <div className="flex flex-col justify-start items-start gap-[5px]">
               <label for="email">Email</label>
               <input type="email" id='email' required className="w-full bg-transparent border-[1px] rounded-md"/>
-            </div>
+            </div> */}
 
-            <div className="flex flex-col justify-start items-start gap-[5px]">
+            {/* <div className="flex flex-col justify-start items-start gap-[5px]">
               <label htmlFor="password">Password</label>
               <input type="password" id='password' required className="w-full bg-transparent border-[1px] rounded-md"/>
-            </div>
+            </div> */}
 
-            <button type="submit" className="w-full bg-pink-900 hover:bg-pink-700 transition duration-300 rounded-lg py-[5px]">Login</button>
+            <a href={loginEndpoint} className="w-full bg-pink-900 hover:bg-pink-700 transition duration-300 rounded-lg py-[5px]">Login</a>
 
           </form>
 
-          <p className='text-white'>Don't have an account? <span><Link to="/signup" className="text-pink-500 hover:underline">Sign up</Link></span></p>
+          {/* <p className='text-white'>Don't have an account? <span><Link to="/signup" className="text-pink-500 hover:underline">Sign up</Link></span></p> */}
 
       </section>
 
