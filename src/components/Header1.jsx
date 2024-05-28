@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import download from '../assets/download.png'
 import bell from '../assets/bell.png'
 
 const Header1 = () => {
+  const [token, setToken] = useState(window.localStorage.getItem("token"))
+
+  const  logout = () =>{
+    setToken("")
+    window.localStorage.removeItem("token")
+  }
+
   return (
       <section className="mx-[10px] px-[10px] py-[10px] rounded-lg flex flex-row justify-end items-center gap-[20px]">
-
-        <Link to="/signup" className="px-[15px] py-[5px] bg-pink-950 rounded-3xl cursor-pointer hover:bg-pink-700 hover:border-none transition duration-300">Sign up</Link>
-
-        <Link to="/login" className=" bg-pink-950 px-[25px] py-[5px] rounded-3xl cursor-pointer hover:bg-pink-700 hover:border-none transition duration-300">Login</Link>
-
+        
         <Link to="/layout2/download" className="flex flex-row justify-center items-center gap-[10px] bg-[black] border-[1px] px-[15px] py-[5px] rounded-3xl cursor-pointer hover:bg-pink-700 hover:border-none transition duration-300">
 
           <img className="w-[20px] border-[1px] rounded-xl" src={download} alt="" />
@@ -23,6 +26,10 @@ const Header1 = () => {
 
           <img className="w-[20px] h-[20px]" src={bell} alt=""/>
 
+        </Link>
+
+        <Link to="/login" onClick={logout} className="flex flex-row justify-center items-center gap-[10px] bg-[black] border-[1px] px-[15px] py-[5px] rounded-3xl cursor-pointer hover:bg-pink-700 hover:border-none transition duration-300">
+          Logout
         </Link>
 
       </section>
