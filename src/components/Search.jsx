@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import Footer from './Footer';
+// import Footer from './Footer';
 import { Link } from 'react-router-dom';
 import user from "../assets/user.png"
 
