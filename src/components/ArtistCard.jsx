@@ -1,13 +1,13 @@
 import React from 'react'
-import test from '../assets/download.jfif'
 
-const ArtistCard = () => {
+const ArtistCard = ({artistImage, artistName, artistDetail}) => {
+
   return (
     <div className="flex flex-col justify-center items-center w-[160px] hover:bg-[#280810] hover:shadow-[0px_5px_40px_-10px_#000000] px-[10px] py-[10px] gap-[5px] rounded-lg transition duration-300 cursor-pointer">
-      <img src={test} className="w-[150px] h-[150px] rounded-full" />
+      <img src={artistImage} className="w-[150px] h-[150px] rounded-full" />
       <div className="flex flex-col justify-center items-center">
-        <h4>Artist 1</h4>
-        <p>Artist Detail</p>
+        <h4 className='text-center'>{artistName}</h4>
+        <p className='text-[#7c7c7c]'>{artistDetail}</p>
       </div>
     </div>
   )
