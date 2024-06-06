@@ -4,10 +4,8 @@ import download from '../assets/download.png'
 import bell from '../assets/bell.png'
 
 const Header1 = () => {
-  const [token, setToken] = useState(window.localStorage.getItem("token"))
 
   const  logout = () =>{
-    setToken("")
     window.localStorage.removeItem("token")
   }
 
