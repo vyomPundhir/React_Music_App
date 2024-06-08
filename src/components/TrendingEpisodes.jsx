@@ -42,7 +42,7 @@ const TrendingEpisodes = () => {
 
         <div className="flex flex-row items-center justify-start flex-wrap gap-[10px]">
 
-        {
+          {
             episodes.map(episode => (
         
               <div key={episode.id}>
