@@ -46,7 +46,7 @@ const PopularAlbums = () => {
               <div key={album.id}>
                 {
                   album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.type} /> : 
-                  <AlbumCard artistImage={user} albumName={album.name} albumDetail={album.type} />
+                  <AlbumCard albumImage={user} albumName={album.name} albumDetail={album.type} />
                 }
         
               </div>
