@@ -9,9 +9,13 @@ const All = () => {
 
   const [artists, setArtists] = useState([])
   const [albums, setAlbums] = useState([])
+  const [playlists, setPlaylists] = useState([])
+  const [episodes, setEpisodes] = useState([])
+  const [shows, setShows] = useState([])
   let token = window.localStorage.getItem("token")
 
   useEffect(() => {
+
     const fetchArtists = async () => {
       try {
         const {data} = await axios.get("https://api.spotify.com/v1/artists", {
@@ -45,9 +49,67 @@ const All = () => {
         console.error('Error fetching albums', error);
       }
     };
+
+    const fetchPlaylists = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            limit: 5,
+          }
+        });
+        console.log(data)
+        setPlaylists(data.playlists.items)
+
+      } catch (error) {
+        console.error('Error fetching featured charts', error);
+      }
+    };
+
+    const fetchEpisodes = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/episodes", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            ids: "1cIK5BD3CKvKwiCYA16XYW,3n9Sx2q65nyw4kqvtnsmhH,4p8T6BF5DTpzOoFAbcGgqZ,7JEJp2uiED0PsKDwf0vo77,1x1YHdOpYAjwR48eoz1yLL"
+          }
+        });
+        console.log(data)
+        setEpisodes(data.episodes)
+
+      } catch (error) {
+        console.error('Error fetching trending episode', error);
+      }
+    };
   
+    const fetchShows = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/shows", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            ids: "0A6kWKFEOFtp8fkrpnAJQB,0CteGmcUh91IrACr914hTa,1u1LNBjAd1LLRW8GXML1er,38AaGN8a1Ar4Hw1t5ZRu6t,2382o7ALF3B9J5Pplk0vwH"
+          }
+        });
+        console.log(data)
+        setShows(data.shows)
+        
+
+      } catch (error) {
+        console.error('Error fetching Podcasts', error);
+      }
+    };
+
     fetchArtists()
     fetchAlbums()
+    fetchPlaylists()
+    fetchEpisodes()
+    fetchShows()
   }, [token])
 
 
@@ -112,11 +174,20 @@ const All = () => {
           <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
+          
+        {
+            playlists.map(playlist => (
+        
+              <div key={playlist.id}>
+                {
+                  playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
+                  <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
+                }
+        
+              </div>
+            ))
+          }
+
         </div>
       </div>
 
@@ -126,11 +197,20 @@ const All = () => {
           <Link to="/home/featuredCharts" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
+          
+        {
+            playlists.map(playlist => (
+        
+              <div key={playlist.id}>
+                {
+                  playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
+                  <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
+                }
+        
+              </div>
+            ))
+          }
+
         </div>
       </div>
 
@@ -154,11 +234,18 @@ const All = () => {
           <Link to="/home/originalPodcasts" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
+          {
+            shows.map(show => (
+        
+              <div key={show.id}>
+                {
+                  show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.type} /> : 
+                  <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.type} />
+                }
+        
+              </div>
+            ))
+          }
         </div>
       </div>
 
@@ -168,11 +255,18 @@ const All = () => {
           <Link to='/home/trendingEpisodes' className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
+
+          {
+            episodes.map(episode => (
+        
+              <div key={episode.id}>
+                {
+                  episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.type} /> : 
+                  <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.type} />
+                }
+              </div>
+            ))
+          }
         </div>
       </div>
 
