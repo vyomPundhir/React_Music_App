@@ -47,8 +47,8 @@ const OriginalPodcasts = () => {
         
               <div key={show.id}>
                 {
-                  show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.type} /> : 
-                  <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.type} />
+                  show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.publisher} /> : 
+                  <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.publisher} />
                 }
         
               </div>
