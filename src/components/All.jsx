@@ -9,9 +9,11 @@ const All = () => {
 
   const [artists, setArtists] = useState([])
   const [albums, setAlbums] = useState([])
+  const [recommendations, setRecommendations] = useState([])
   const [playlists, setPlaylists] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [shows, setShows] = useState([])
+  const [music, setMusic] = useState([])
   let token = window.localStorage.getItem("token")
 
   useEffect(() => {
@@ -47,6 +49,27 @@ const All = () => {
         setAlbums(data.albums);
       } catch (error) {
         console.error('Error fetching albums', error);
+      }
+    };
+
+    const fetchRecommendations = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/recommendations", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            limit: 5,
+            seed_artists: "0oOet2f43PA68X5RxKobEy,1dVygo6tRFXC8CSWURQJq2,4fEkbug6kZzzJ8eYX6Kbbp",
+            seed_generes: "indian,romance,party",
+            seed_tracks: "24MMjyA3NLqCsDJfsn51eg,1iZLpuGMr4tn1F5bZu32Kb"
+          }
+        });
+        console.log(data)
+        setRecommendations(data.tracks)
+
+      } catch (error) {
+        console.error('Error fetching recommendations', error);
       }
     };
 
@@ -105,16 +128,33 @@ const All = () => {
       }
     };
 
+    const fetchMusic = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            limit: 5
+          }
+        });
+        console.log(data)
+        setMusic(data.items)
+        
+
+      } catch (error) {
+        console.error('Error fetching Music', error);
+      }
+    };
+
     fetchArtists()
     fetchAlbums()
+    fetchRecommendations()
     fetchPlaylists()
     fetchEpisodes()
     fetchShows()
+    fetchMusic()
   }, [token])
-
-
-
-
 
   return (
     <section className="flex flex-col gap-[20px]">
@@ -157,8 +197,8 @@ const All = () => {
         
               <div key={album.id}>
                 {
-                  album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.type} /> : 
-                  <AlbumCard artistImage={user} albumName={album.name} albumDetail={album.type} />
+                  album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.artists[0].name} /> : 
+                  <AlbumCard artistImage={user} albumName={album.name} albumDetail={album.artists[0].name} />
                 }
         
               </div>
@@ -170,18 +210,18 @@ const All = () => {
 
       <div className="flex flex-col gap-[20px]">
         <div className="flex flex-row justify-between items-center">
-          <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Popular Radio</Link>
+          <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Recommendations</Link>
           <Link to="/home/popularRadio" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
           
         {
-            playlists.map(playlist => (
+            recommendations.map(item => (
         
-              <div key={playlist.id}>
+              <div key={item.id}>
                 {
-                  playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
-                  <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
+                  item.album.images.length ? <AlbumCard albumImage={item.album.images[0].url} albumName={item.name} albumDetail={item.album.artists[0].name} /> : 
+                  <AlbumCard albumImage={user} albumName={item.album.images[0].url} albumDetail={item.album.artists[0].name} />
                 }
         
               </div>
@@ -220,11 +260,20 @@ const All = () => {
           <Link to="/home/musicPlayerPlaylists" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
-          <AlbumCard/>
+
+          {
+            music.map(item => (
+        
+              <div key={item.id}>
+                {
+                  item.album.images.length ? <AlbumCard albumImage={item.album.images[0].url} albumName={item.name} albumDetail={item.album.artists[0].name} /> : 
+                  <AlbumCard albumImage={user} albumName={item.name} albumDetail={item.album.artists.name} />
+                }
+        
+              </div>
+            ))
+          }
+
         </div>
       </div>
 
@@ -239,8 +288,8 @@ const All = () => {
         
               <div key={show.id}>
                 {
-                  show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.type} /> : 
-                  <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.type} />
+                  show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.publisher} /> : 
+                  <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.publisher} />
                 }
         
               </div>
@@ -261,8 +310,8 @@ const All = () => {
         
               <div key={episode.id}>
                 {
-                  episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.type} /> : 
-                  <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.type} />
+                  episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.show.name} /> : 
+                  <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.show.name} />
                 }
               </div>
             ))
