@@ -47,8 +47,8 @@ const TrendingEpisodes = () => {
         
               <div key={episode.id}>
                 {
-                  episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.type} /> : 
-                  <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.type} />
+                  episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.show.name} /> : 
+                  <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.show.name} />
                 }
         
               </div>
