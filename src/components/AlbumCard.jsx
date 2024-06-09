@@ -6,7 +6,7 @@ const AlbumCard = ({albumImage, albumName, albumDetail}) => {
       <img src={albumImage} className="w-[150px] h-[150px] rounded-lg" />
       <div className="flex flex-col justify-center items-center">
         <h4 className='text-center'>{albumName}</h4>
-        <p className='text-[#7c7c7c]'>{albumDetail}</p>
+        <p className='text-[#7c7c7c] text-center'>{albumDetail}</p>
       </div>
     </div>
 
