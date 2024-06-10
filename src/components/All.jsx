@@ -14,6 +14,7 @@ const All = () => {
   const [episodes, setEpisodes] = useState([])
   const [shows, setShows] = useState([])
   const [music, setMusic] = useState([])
+  const [items, setItems] = useState([])
   let token = window.localStorage.getItem("token")
 
   useEffect(() => {
@@ -147,6 +148,24 @@ const All = () => {
       }
     };
 
+    const fetchPunjabi = async () => {
+      try {
+        const {data} = await axios.get("https://api.spotify.com/v1/browse/categories/0JQ5DAqbMKFKSopHMaeIeI/playlists", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          params: {
+            limit: 5,
+          }
+        });
+        console.log(data)
+        setItems(data.playlists.items)
+
+      } catch (error) {
+        console.error('Error fetching recommendations', error);
+      }
+    };
+
     fetchArtists()
     fetchAlbums()
     fetchRecommendations()
@@ -154,6 +173,7 @@ const All = () => {
     fetchEpisodes()
     fetchShows()
     fetchMusic()
+    fetchPunjabi()
   }, [token])
 
   return (
@@ -191,7 +211,7 @@ const All = () => {
           <Link to="/home/popularAlbums" className="hover:cursor-pointer hover:underline ">Show all</Link>
         </div>
         <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
-      
+          
           {
             albums.map(album => (
         
@@ -270,6 +290,27 @@ const All = () => {
                   <AlbumCard albumImage={user} albumName={item.name} albumDetail={item.album.artists.name} />
                 }
         
+              </div>
+            ))
+          }
+
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-[20px]">
+        <div className="flex flex-row justify-between items-center">
+          <Link to="/home/punjabiHits" className="hover:cursor-pointer hover:underline text-[27px] font-[700]">Punjabi Hits</Link>
+          <Link to="/home/punjabiHits" className="hover:cursor-pointer hover:underline ">Show all</Link>
+        </div>
+        <div className="flex flex-row items-center justify-start flex-wrap gap-[5px]">
+          
+        {
+            items.map(item => (
+              <div key={item.id}>
+                {
+                  item.images.length ? <AlbumCard albumImage={item.images[0].url} albumName={item.name} albumDetail={item.type} /> : 
+                  <AlbumCard albumImage={user} albumName={item.images[0].url} albumDetail={item.type} />
+                }
               </div>
             ))
           }
