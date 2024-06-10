@@ -5,14 +5,13 @@ import axios from 'axios'
 
 const Music = () => {
 
-  // 0JQ5DAqbMKFz6FAsUtgAab,0JQ5DAt0tbjZptfcdMSKl3,0JQ5DAqbMKFHCxg5H5PtqW,0JQ5DAqbMKFKSopHMaeIeI
   const [items, setItems] = useState([])
   let token = window.localStorage.getItem("token")
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const {data} = await axios.get("https://api.spotify.com/v1/browse/categories/0JQ5DAt0tbjZptfcdMSKl3/playlists", {
+        const {data} = await axios.get("https://api.spotify.com/v1/browse/categories/0JQ5DAqbMKFHCxg5H5PtqW/playlists", {
           headers: {
             Authorization: `Bearer ${token}`
           },
@@ -42,7 +41,7 @@ const Music = () => {
 
         <div className="flex flex-row items-center justify-start flex-wrap gap-[10px]">
 
-        {
+          {
             items.map(item => (
               <div key={item.id}>
                 {
