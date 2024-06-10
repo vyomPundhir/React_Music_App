@@ -11,12 +11,13 @@ import Download from './components/Download';
 import Layout2 from './components/Layout2';
 import New from './components/New';
 import PopularArtists from './components/PopularArtists';
-import PopularRadio from './components/PopularRadio';
+import PopularRadio from './components/Recommendations';
 import FeaturedCharts from './components/FeaturedCharts';
 import MusicPlayerPlaylists from './components/MusicPlayerPlaylists';
 import OriginalPodcasts from './components/OriginalPodcasts';
 import PopularAlbums from './components/PopularAlbums';
 import TrendingEpisodes from './components/TrendingEpisodes';
+import PunjabiHits from './components/PunjabiHits';
 
 
 const App = () => {
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="popularRadio" element={<PopularRadio />} />
                 <Route path="featuredCharts" element={<FeaturedCharts />} />
                 <Route path="musicPlayerPlaylists" element={<MusicPlayerPlaylists />} />
+                <Route path="punjabiHits" element={<PunjabiHits />} />
                 <Route path="originalPodcasts" element={<OriginalPodcasts />} />
                 <Route path="trendingEpisodes" element={<TrendingEpisodes />} />
     
