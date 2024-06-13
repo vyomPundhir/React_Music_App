@@ -18,7 +18,7 @@ import OriginalPodcasts from './components/OriginalPodcasts';
 import PopularAlbums from './components/PopularAlbums';
 import TrendingEpisodes from './components/TrendingEpisodes';
 import PunjabiHits from './components/PunjabiHits';
-
+import Album from './components/Album';
 
 const App = () => {
 
@@ -59,6 +59,8 @@ const App = () => {
               </Route>
     
               <Route path="search" element={<Search />} />
+
+              <Route path="album" element={<Album />} />
     
               <Route path='layout2/' element={<Layout2 />}>
                 <Route path='download' element={<Download/>}/>
