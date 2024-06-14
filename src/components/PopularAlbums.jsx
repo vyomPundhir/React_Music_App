@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AlbumCard from './AlbumCard'
 import user from "../assets/user.png"
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const PopularAlbums = () => {
 
@@ -43,13 +44,13 @@ const PopularAlbums = () => {
           {
             albums.map(album => (
         
-              <div key={album.id}>
+              <Link to="/album" key={album.id}>
                 {
                   album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.type} /> : 
                   <AlbumCard albumImage={user} albumName={album.name} albumDetail={album.type} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
