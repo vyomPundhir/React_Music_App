@@ -215,13 +215,13 @@ const All = () => {
           {
             albums.map(album => (
         
-              <div key={album.id}>
+              <Link to="/album" key={album.id}>
                 {
                   album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.artists[0].name} /> : 
                   <AlbumCard artistImage={user} albumName={album.name} albumDetail={album.artists[0].name} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
