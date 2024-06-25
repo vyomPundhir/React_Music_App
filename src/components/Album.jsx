@@ -1,37 +1,36 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
 const Album = () => {
 
-  const [albumId, setAlbumId] = useState("")
-  let token = window.localStorage.getItem("token") 
-  let album = "0a183xiCHiC1GQd8ou7WXO"
+  const {id} = useParams();
+  const [album, setAlbum] = useState(null)
+  const [tracks, setTracks] = useState([])
+  const token = window.localStorage.getItem("token")
+
   useEffect(() => {
     const fetchAlbum = async () => {
       try {
-        const {data} = await axios.get(`https://api.spotify.com/v1/albums/${album}`, {
-          headers: {
+        const {data} = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
+          headers:{
             Authorization: `Bearer ${token}`
-          },
-          params: {
-            
           }
         });
         console.log(data)
-        // setAlbums(data.albums);
+        // setAlbum(data)
       } catch (error) {
-        console.error('Error fetching albums', error);
+        console.error('Error fetching Album Details', error)
       }
     };
-  
+
     fetchAlbum()
-  }, [token])
-  
+  }, [id, token]);
+
+
 
   return (
-    <div>
-      Album
-    </div>
+    <div>Album</div>
   )
 }
 
