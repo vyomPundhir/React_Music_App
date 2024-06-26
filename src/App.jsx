@@ -59,8 +59,7 @@ const App = () => {
               </Route>
     
               <Route path="search" element={<Search />} />
-
-              <Route path="album" element={<Album />} />
+              <Route path="album/:id" element={<Album />} />
     
               <Route path='layout2/' element={<Layout2 />}>
                 <Route path='download' element={<Download/>}/>
