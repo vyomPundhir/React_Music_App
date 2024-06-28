@@ -82,7 +82,7 @@ const Album = () => {
               tracks.map((track) => (
                 <Link to={`/track/${track.id}`} key={track.id} className='flex flex-col gap-[20px] pb-[10px]'>
                   <TrackCard
-                    trackNumber={track.track_number}
+                    trackNumber={tracks.indexOf(track)+1}
                     trackName={track.name}
                     trackArtists={track.artists.map((artist) => artist.name).join(', ')}
                     trackTime={millisToMinutesAndSeconds(track.duration_ms)}
