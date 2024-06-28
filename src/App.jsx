@@ -19,6 +19,9 @@ import PopularAlbums from './components/PopularAlbums';
 import TrendingEpisodes from './components/TrendingEpisodes';
 import PunjabiHits from './components/PunjabiHits';
 import Album from './components/Album';
+import Artist from './components/Artist'
+import Track from './components/Track';
+import Playlist from './components/Playlist';
 
 const App = () => {
 
@@ -59,7 +62,10 @@ const App = () => {
               </Route>
     
               <Route path="search" element={<Search />} />
+              <Route path="artist/:id" element={<Artist />} />
               <Route path="album/:id" element={<Album />} />
+              <Route path="track/:id" element={<Track />} />
+              <Route path="playlist/:id" element={<Playlist />} />
     
               <Route path='layout2/' element={<Layout2 />}>
                 <Route path='download' element={<Download/>}/>
