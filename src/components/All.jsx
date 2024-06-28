@@ -29,7 +29,7 @@ const All = () => {
             ids : "1wRPtKGflJrBx9BmLsSwlU,4YRxDV8wJFPHPTeXepOstw,1mYsTxnqsietFxj1OgoGbG,4fEkbug6kZzzJ8eYX6Kbbp,1dVygo6tRFXC8CSWURQJq2"
           }
         });
-        console.log(data)
+        // console.log(data)
         setArtists(data.artists);
       } catch (error) {
         console.error('Error fetching artists', error);
@@ -46,7 +46,7 @@ const All = () => {
             ids : "0a183xiCHiC1GQd8ou7WXO,0Rkv5iqjF2uenfL0OVB8hg,3uuu6u13U0KeVQsZ3CZKK4,4mGz0G0d2mqGmaFc67MEEm,1VZDqgb1ALde0CFMIvEGNr"
           }
         });
-        console.log(data)
+        // console.log(data)
         setAlbums(data.albums);
       } catch (error) {
         console.error('Error fetching albums', error);
@@ -84,7 +84,7 @@ const All = () => {
             limit: 5,
           }
         });
-        console.log(data)
+        // console.log(data)
         setPlaylists(data.playlists.items)
 
       } catch (error) {
@@ -102,7 +102,7 @@ const All = () => {
             ids: "1cIK5BD3CKvKwiCYA16XYW,3n9Sx2q65nyw4kqvtnsmhH,4p8T6BF5DTpzOoFAbcGgqZ,7JEJp2uiED0PsKDwf0vo77,1x1YHdOpYAjwR48eoz1yLL"
           }
         });
-        console.log(data)
+        // console.log(data)
         setEpisodes(data.episodes)
 
       } catch (error) {
@@ -120,7 +120,7 @@ const All = () => {
             ids: "0A6kWKFEOFtp8fkrpnAJQB,0CteGmcUh91IrACr914hTa,1u1LNBjAd1LLRW8GXML1er,38AaGN8a1Ar4Hw1t5ZRu6t,2382o7ALF3B9J5Pplk0vwH"
           }
         });
-        console.log(data)
+        // console.log(data)
         setShows(data.shows)
         
 
@@ -139,7 +139,7 @@ const All = () => {
             limit: 5
           }
         });
-        console.log(data)
+        // console.log(data)
         setMusic(data.items)
         
 
@@ -158,7 +158,7 @@ const All = () => {
             limit: 5,
           }
         });
-        console.log(data)
+        // console.log(data)
         setItems(data.playlists.items)
 
       } catch (error) {
@@ -191,13 +191,13 @@ const All = () => {
           {
             artists.map(artist => (
         
-              <div key={artist.id}>
+              <Link to={`/artist/${artist.id}`} key={artist.id}>
                 {
                   artist.images.length ? <ArtistCard artistImage={artist.images[0].url} artistName={artist.name} artistDetail={artist.type} /> : 
                   <ArtistCard artistImage={user} artistName={artist.name} artistDetail={artist.type} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
@@ -238,13 +238,13 @@ const All = () => {
         {
             recommendations.map(item => (
         
-              <div key={item.id}>
+              <Link to={`/track/${item.id}`} key={item.id}>
                 {
                   item.album.images.length ? <AlbumCard albumImage={item.album.images[0].url} albumName={item.name} albumDetail={item.album.artists[0].name} /> : 
-                  <AlbumCard albumImage={user} albumName={item.album.images[0].url} albumDetail={item.album.artists[0].name} />
+                  <AlbumCard albumImage={user} albumName={item.album.images[0].url} albumDetail={item.album.artists} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
@@ -261,13 +261,13 @@ const All = () => {
         {
             playlists.map(playlist => (
         
-              <div key={playlist.id}>
+              <Link to={`/playlist/${playlist.id}`} key={playlist.id}>
                 {
                   playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
                   <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
@@ -284,13 +284,13 @@ const All = () => {
           {
             music.map(item => (
         
-              <div key={item.id}>
+              <Link to={`/track/${item.id}`} key={item.id}>
                 {
                   item.album.images.length ? <AlbumCard albumImage={item.album.images[0].url} albumName={item.name} albumDetail={item.album.artists[0].name} /> : 
                   <AlbumCard albumImage={user} albumName={item.name} albumDetail={item.album.artists.name} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
@@ -306,12 +306,12 @@ const All = () => {
           
         {
             items.map(item => (
-              <div key={item.id}>
+              <Link to={`/playlist/${item.id}`} key={item.id}>
                 {
                   item.images.length ? <AlbumCard albumImage={item.images[0].url} albumName={item.name} albumDetail={item.type} /> : 
                   <AlbumCard albumImage={user} albumName={item.images[0].url} albumDetail={item.type} />
                 }
-              </div>
+              </Link>
             ))
           }
 
