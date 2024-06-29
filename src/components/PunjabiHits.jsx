@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AlbumCard from './AlbumCard'
 import user from "../assets/user.png"
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 function PunjabiHits() {
 
@@ -44,13 +45,13 @@ function PunjabiHits() {
           {
             playlists.map(playlist => (
         
-              <div key={playlist.id}>
+              <Link to={`/playlist/${playlist.id}`} key={playlist.id}>
                 {
                   playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
                   <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
