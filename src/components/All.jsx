@@ -327,13 +327,13 @@ const All = () => {
           {
             shows.map(show => (
         
-              <div key={show.id}>
+              <Link to={`/show/${show.id}`} key={show.id}>
                 {
                   show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.publisher} /> : 
                   <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.publisher} />
                 }
         
-              </div>
+              </Link>
             ))
           }
         </div>
@@ -349,12 +349,12 @@ const All = () => {
           {
             episodes.map(episode => (
         
-              <div key={episode.id}>
+              <Link to={`/episode/${episode.id}`} key={episode.id}>
                 {
                   episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.show.name} /> : 
                   <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.show.name} />
                 }
-              </div>
+              </Link>
             ))
           }
         </div>
