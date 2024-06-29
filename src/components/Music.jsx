@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AlbumCard from './AlbumCard'
 import user from "../assets/user.png"
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Music = () => {
 
@@ -43,12 +44,12 @@ const Music = () => {
 
           {
             items.map(item => (
-              <div key={item.id}>
+              <Link to={`/playlist/${item.id}`} key={item.id}>
                 {
                   item.images.length ? <AlbumCard albumImage={item.images[0].url} albumName={item.name} albumDetail={item.type} /> : 
                   <AlbumCard albumImage={user} albumName={item.images[0].url} albumDetail={item.type} />
                 }
-              </div>
+              </Link>
             ))
           }
 
