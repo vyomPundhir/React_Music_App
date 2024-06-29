@@ -39,7 +39,7 @@ const Album = () => {
 
       <section className="px-[15px] flex flex-col gap-[20px] overflow-y-auto h-[445px] scrollbar-thin scrollbar-track-black scrollbar-thumb-[#270a0a]">
         
-        <div className="flex flex-row items-start justify-start gap-[15px]">
+        <div className="flex flex-row items-center justify-start gap-[15px]">
 
           <img src={album.images[0].url} alt="image" className="w-[150px] h-[150px] rounded-md" />
 
