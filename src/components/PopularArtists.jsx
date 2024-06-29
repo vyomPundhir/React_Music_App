@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ArtistCard from './ArtistCard'
 import user from "../assets/user.png"
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const PopularArtists = () => {
 
@@ -43,13 +44,13 @@ const PopularArtists = () => {
         {
           artists.map(artist => (
       
-            <div key={artist.id}>
+            <Link to={`/artist/${artist.id}`} key={artist.id}>
               {
                 artist.images.length ? <ArtistCard artistImage={artist.images[0].url} artistName={artist.name} artistDetail={artist.type} /> : 
                 <ArtistCard artistImage={user} artistName={artist.name} artistDetail={artist.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
