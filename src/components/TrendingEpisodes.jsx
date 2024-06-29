@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AlbumCard from './AlbumCard'
 import user from "../assets/user.png"
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const TrendingEpisodes = () => {
@@ -45,13 +46,13 @@ const TrendingEpisodes = () => {
           {
             episodes.map(episode => (
         
-              <div key={episode.id}>
+              <Link to={`/episode/${episode.id}`} key={episode.id}>
                 {
                   episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.show.name} /> : 
                   <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.show.name} />
                 }
         
-              </div>
+              </Link>
             ))
           }
 
