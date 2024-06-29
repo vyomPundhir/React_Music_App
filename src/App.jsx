@@ -22,6 +22,8 @@ import Album from './components/Album';
 import Artist from './components/Artist'
 import Track from './components/Track';
 import Playlist from './components/Playlist';
+import Show from './components/Show';
+import Episode from './components/Episode';
 
 const App = () => {
 
@@ -66,6 +68,9 @@ const App = () => {
               <Route path="album/:id" element={<Album />} />
               <Route path="track/:id" element={<Track />} />
               <Route path="playlist/:id" element={<Playlist />} />
+              <Route path="show/:id" element={<Show />} />
+              <Route path="episode/:id" element={<Episode />}/>
+
     
               <Route path='layout2/' element={<Layout2 />}>
                 <Route path='download' element={<Download/>}/>
