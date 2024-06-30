@@ -57,78 +57,78 @@ const Search = () => {
         {
           tracks.map(track => (
       
-            <div key={track.id}>
+            <Link to={`/track/${track.id}`} key={track.id}>
               {
                 track.album.images.length ? <AlbumCard albumImage={track.album.images[0].url} albumName={track.name} albumDetail={track.type} /> : 
                 <AlbumCard albumImage={user} albumName={track.name} albumDetail={track.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
         {
           playlists.map(playlist => (
       
-            <div key={playlist.id}>
+            <Link to={`/playlist/${playlist.id}`} key={playlist.id}>
               {
                 playlist.images.length ? <AlbumCard albumImage={playlist.images[0].url} albumName={playlist.name} albumDetail={playlist.type} /> : 
                 <AlbumCard albumImage={user} albumName={playlist.name} albumDetail={playlist.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
         {
           albums.map(album => (
       
-            <div key={album.id}>
+            <Link to={`/album/${album.id}`} key={album.id}>
               {
                 album.images.length ? <AlbumCard albumImage={album.images[0].url} albumName={album.name} albumDetail={album.type} /> : 
                 <AlbumCard albumImage={user} albumName={album.name} albumDetail={album.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
         {
           artists.map(artist => (
       
-            <div key={artist.id}>
+            <Link to={`/artist/${artist.id}`} key={artist.id}>
               {
                 artist.images.length ? <ArtistCard artistImage={artist.images[0].url} artistName={artist.name} artistDetail={artist.type} /> : 
                 <ArtistCard artistImage={user} artistName={artist.name} artistDetail={artist.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
         {
           episodes.map(episode => (
       
-            <div key={episode.id}>
+            <Link to={`/episode/${episode.id}`} key={episode.id}>
               {
                 episode.images.length ? <AlbumCard albumImage={episode.images[0].url} albumName={episode.name} albumDetail={episode.type} /> : 
                 <AlbumCard albumImage={user} albumName={episode.name} albumDetail={episode.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
         {
           shows.map(show => (
       
-            <div key={show.id}>
+            <Link to={`/show/${show.id}`} key={show.id}>
               {
                 show.images.length ? <AlbumCard albumImage={show.images[0].url} albumName={show.name} albumDetail={show.type} /> : 
                 <AlbumCard albumImage={user} albumName={show.name} albumDetail={show.type} />
               }
       
-            </div>
+            </Link>
           ))
         }
 
