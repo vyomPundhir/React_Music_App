@@ -1,7 +1,7 @@
 // Player.js
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faStepBackward, faStepForward, faRandom, faRedo, faVolumeUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faStepBackward, faStepForward, faRandom, faRedo, faVolumeUp, faVolumeMute, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Player = () => {
 
@@ -9,6 +9,8 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1)
+  const [isMuted, setIsMuted] = useState(false); 
+const [previousVolume, setPreviousVolume] = useState(1);
   const audioRef = useRef(null);
 
   const togglePlayPause = () => {
@@ -50,7 +52,26 @@ const Player = () => {
     const newVolume = e.target.value;
     audioRef.current.volume = newVolume
     setVolume(newVolume)
+    if (newVolume == 0) {
+      setIsMuted(true)
+    }else{
+      setIsMuted(false)
+      setPreviousVolume(newVolume);
+    }
   }
+
+  const toggleMute = () => {
+    if (isMuted) {
+      audioRef.current.volume = previousVolume;
+      setVolume(previousVolume);
+      setIsMuted(false);
+    } else {
+      setPreviousVolume(volume);
+      audioRef.current.volume = 0;
+      setVolume(0);
+      setIsMuted(true);
+    }
+  };
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -101,6 +122,7 @@ const Player = () => {
           min="0"
           max={duration}
           value={currentTime}
+          step="0.01"
           onChange={handleSliderChange}
           className="w-full mx-2" />
           <span className="text-xs text-gray-400">
@@ -111,8 +133,8 @@ const Player = () => {
 
       {/* Right Section: Volume Controls */}
       <div className="flex items-center">
-        <button>
-          <FontAwesomeIcon icon={faVolumeUp} />
+        <button onClick={toggleMute}>
+          <FontAwesomeIcon icon={isMuted ? faVolumeMute : faVolumeUp} />
         </button>
         <input
           type="range"
