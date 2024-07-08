@@ -3,14 +3,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faStepBackward, faStepForward, faRandom, faRedo, faVolumeUp, faVolumeMute, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const Player = () => {
+const Player = ({ trackQueue }) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1)
   const [isMuted, setIsMuted] = useState(false); 
-const [previousVolume, setPreviousVolume] = useState(1);
+  const [previousVolume, setPreviousVolume] = useState(1);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+
+
   const audioRef = useRef(null);
 
   const togglePlayPause = () => {
@@ -41,6 +44,31 @@ const [previousVolume, setPreviousVolume] = useState(1);
       audio.removeEventListener('loadedmetadata', setAudioData);
     };
   }, []);
+
+  useEffect(() => {
+    if (trackQueue.length > 0) {
+      audioRef.current.src = trackQueue[currentTrackIndex].preview_url;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [currentTrackIndex, trackQueue])
+  
+
+  const nextTrack = () => {
+    if (currentTrackIndex < trackQueue.length - 1) {
+      setCurrentTrackIndex(currentTrackIndex + 1);
+    } else {
+      setCurrentTrackIndex(0); // loop back to start
+    }
+  };
+
+  const previousTrack = () => {
+    if (currentTrackIndex > 0) {
+      setCurrentTrackIndex(currentTrackIndex - 1);
+    } else {
+      setCurrentTrackIndex(trackQueue.length - 1); // loop to end
+    }
+  };
 
   const handleSliderChange = (e) => {
     const newTime = e.target.value;
@@ -79,18 +107,22 @@ const [previousVolume, setPreviousVolume] = useState(1);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  if (!trackQueue || trackQueue.length === 0) return null;
+
+  const currentTrack = trackQueue[currentTrackIndex];
+
   return (
     <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 flex items-center justify-between">
-      <audio ref={audioRef} src="https://p.scdn.co/mp3-preview/e0e74d21c75bb154407b8365e8df62f656a534d6?cid=d0cbd6f6defc4a418d298a3816c71ae9"></audio>
+      <audio ref={audioRef} onEnded={nextTrack}></audio>
       {/* Left Section: Current Track Info */}
       <div className="flex items-center">
-        <img src="track-image-url" alt="Current Track" className="w-16 h-16 object-cover mr-4" />
+      <img src={currentTrack.album.images[0].url} alt="Current Track" className="w-16 h-16 object-cover mr-4" />
         <div>
-          <div className="text-sm font-semibold">Track Name</div>
-          <div className="text-xs text-gray-400">Artist Names</div>
+          <div className="text-sm font-semibold">{currentTrack.name}</div>
+          <div className="text-xs text-gray-400">{currentTrack.artists.map(artist => artist.name).join(', ')}</div>
         </div>
         <button className="ml-4">
-        <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
 
@@ -100,7 +132,7 @@ const [previousVolume, setPreviousVolume] = useState(1);
           <button>
             <FontAwesomeIcon icon={faRandom} />
           </button>
-          <button>
+          <button onClick={previousTrack}>
             <FontAwesomeIcon icon={faStepBackward} />
           </button>
           <button className="w-10 h-10 flex items-center justify-center bg-white text-gray-900 rounded-full"
@@ -108,7 +140,7 @@ const [previousVolume, setPreviousVolume] = useState(1);
           >
             <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
           </button>
-          <button>
+          <button onClick={nextTrack}>
             <FontAwesomeIcon icon={faStepForward} />
           </button>
           <button>
