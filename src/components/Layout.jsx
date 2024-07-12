@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Sidebar from './Sidebar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Player from './Player';
+import { PlayerContext } from '../context/PlayerContext';
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Layout = () => {
     navigate('/home/all');
   }, []);
 
+  const {audioRef, track} = useContext(PlayerContext)
 
   return (
     <>
@@ -17,6 +19,7 @@ const Layout = () => {
         <Outlet />
       </section>
       <Player/>
+      <audio ref={audioRef} src={track.preview_url} preload='auto'></audio>
     </>
     
   )
