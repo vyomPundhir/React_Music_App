@@ -1,11 +1,10 @@
 import React from 'react'
+// import { PlayerContext } from '../context/PlayerContext'
 
 const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId}) => {
 
-  const {playWithId} = useContext(PlayerContext)
-
   return (
-    <section onClick = {()=> playWithId (trackId)} className='flex flex-row justify-between px-[10px] hover:bg-[#280810] hover:shadow-[0px_5px_40px_-10px_#000000] rounded-md cursor-pointer'>
+    <section className='flex flex-row justify-between px-[10px] hover:bg-[#280810] hover:shadow-[0px_5px_40px_-10px_#000000] rounded-md cursor-pointer'>
       <div className='flex flex-row justify-center items-center gap-[20px]'>
         <div>{trackNumber}</div>
         <div >
@@ -13,7 +12,7 @@ const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId}) =
           <p className='text-[14px] text-[#adadad]'>{trackArtists}</p>
         </div>
       </div>
-      
+
       <div className='flex flex-row justify-center items-center'>{trackTime}</div>
     </section>
   )
