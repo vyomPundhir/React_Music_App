@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Header1 from './Header1';
 import TrackCard from './TrackCard';
+import { PlayerContext } from '../context/PlayerContext';
 
 const Track = () => {
-
+  const {playWithId} = useContext(PlayerContext)
   const {id} = useParams();
   const [track, setTrack] = useState(null)
   // const [tracks, setTracks] = useState([])
@@ -29,6 +30,10 @@ const Track = () => {
 
     fetchTrack()
   }, [id, token]);
+
+  const handlePlayTrack = () => {
+    playWithId(track.id);
+  }
 
   if (!track) return <div>Loading...</div>;
 
@@ -72,12 +77,13 @@ const Track = () => {
           
           <div className=''>
           
-                <div className='flex flex-col gap-[20px] pb-[10px]'>
+                <div onClick={handlePlayTrack} className='flex flex-col gap-[20px] pb-[10px]'>
                   <TrackCard
                     trackNumber={1}
                     trackName={track.name}
                     trackArtists={track.artists.map((artist) => artist.name).join(', ')}
                     trackTime={millisToMinutesAndSeconds(track.duration_ms)}
+                    trackId={track.id}
                   />
                 </div>
               
