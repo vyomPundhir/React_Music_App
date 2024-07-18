@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useRef, useState } from "react";
 
 export const PlayerContext = createContext()
@@ -7,6 +8,7 @@ const PlayerContextProvider = (props) => {
   const audioRef = useRef();
   const seekBg = useRef();
   const seekBar = useRef();
+  const token = window.localStorage.getItem("token")
 
   const [track, setTrack] = useState({})
   const [playStatus, setPlayStatus] = useState(false)
@@ -33,28 +35,39 @@ const PlayerContextProvider = (props) => {
     }
 
     const playWithId = async (id) => {
-      await setTrack(track)
-      await audioRef.current.play()
-      setPlayStatus(true)
+      try {
+        const response = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+  
+        setTrack(response.data);
+        console.log(response)
+        audioRef.current.play();
+        setPlayStatus(true);
+      } catch (error) {
+        console.error('Error fetching track:', error);
+      }
     }
 
-    useEffect(() => {
-      setTimeout(()=>{
-        audioRef.current.ontimeupdate = () => {
-          seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100)) + "%"
-          setTime({
-            currentTime: {
-              second: Math.floor(audioRef.current.currentTime % 60),
-              minute: Math.floor(audioRef.current.currentTime / 60)
-            },
-            totalTime: {
-              second: Math.floor(audioRef.current.duration % 60),
-              minute: Math.floor(audioRef.current.duration / 60)
-            }
-          })
-        }
-      }, 1000)
-    }, [audioRef])
+    // useEffect(() => {
+    //   setTimeout(()=>{
+    //     audioRef.current.ontimeupdate = () => {
+    //       seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100)) + "%"
+    //       setTime({
+    //         currentTime: {
+    //           second: Math.floor(audioRef.current.currentTime % 60),
+    //           minute: Math.floor(audioRef.current.currentTime / 60)
+    //         },
+    //         totalTime: {
+    //           second: Math.floor(audioRef.current.duration % 60),
+    //           minute: Math.floor(audioRef.current.duration / 60)
+    //         }
+    //       })
+    //     }
+    //   }, 1000)
+    // }, [audioRef])
     
 
   const contextValue = {
