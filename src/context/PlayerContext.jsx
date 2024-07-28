@@ -43,31 +43,33 @@ const PlayerContextProvider = (props) => {
         });
   
         setTrack(response.data);
-        console.log(response)
-        audioRef.current.play();
-        setPlayStatus(true);
+        // console.log(response)
+        audioRef.current.oncanplay = () => {
+          audioRef.current.play();
+          setPlayStatus(true)
+        }
       } catch (error) {
         console.error('Error fetching track:', error);
       }
     }
 
-    // useEffect(() => {
-    //   setTimeout(()=>{
-    //     audioRef.current.ontimeupdate = () => {
-    //       seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100)) + "%"
-    //       setTime({
-    //         currentTime: {
-    //           second: Math.floor(audioRef.current.currentTime % 60),
-    //           minute: Math.floor(audioRef.current.currentTime / 60)
-    //         },
-    //         totalTime: {
-    //           second: Math.floor(audioRef.current.duration % 60),
-    //           minute: Math.floor(audioRef.current.duration / 60)
-    //         }
-    //       })
-    //     }
-    //   }, 1000)
-    // }, [audioRef])
+    useEffect(() => {
+      setTimeout(()=>{
+        audioRef.current.ontimeupdate = () => {
+          seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100)) + "%"
+          setTime({
+            currentTime: {
+              second: Math.floor(audioRef.current.currentTime % 60),
+              minute: Math.floor(audioRef.current.currentTime / 60)
+            },
+            totalTime: {
+              second: Math.floor(audioRef.current.duration % 60),
+              minute: Math.floor(audioRef.current.duration / 60)
+            }
+          })
+        }
+      }, 1000)
+    }, [audioRef])
     
 
   const contextValue = {
