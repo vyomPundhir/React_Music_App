@@ -5,7 +5,6 @@ import { faPlay, faPause, faStepBackward, faStepForward, faRandom, faRedo, faVol
 import { PlayerContext } from '../context/PlayerContext';
 
 const Player = () => {
-
   const {track, seekBar, seekBg, playStatus, play, pause, time} = useContext(PlayerContext)
 
   return (
@@ -13,8 +12,8 @@ const Player = () => {
       <div className="hidden lg:flex items-center gap-4">
         <img className='w-12' src={track.album?.images[0].url} alt="image" />
         <div>
-          <p>{track.name}</p>
-          <p>{track.artists?.map((artist) => artist.name).join(', ')}</p>
+          <p className='text-[15px]'>{track.name}</p>
+          <p className='text-[13px]'>{track.artists?.map((artist) => artist.name).join(', ')}</p>
         </div>
       </div>
 
@@ -58,11 +57,11 @@ const Player = () => {
         </div>
       </div>
 
-      <div className="hidden lg:flex items-center gap-2 opacity-75">
+      <div className="hidden lg:flex items-center gap-2">
       <button>
         <FontAwesomeIcon icon={faVolumeUp} />
       </button>
-      <div className="w-20 bg-slate-50 h-1 rounded"></div>
+
       <input
       type="range"
       min="0"
@@ -70,7 +69,7 @@ const Player = () => {
       step="0.01"
       // value={volume}
       // onChange={handleVolumeChange}
-      className="ml-2"
+      className="ml-2 accent-pink-700 h-1"
       />
       </div>
     </div>
