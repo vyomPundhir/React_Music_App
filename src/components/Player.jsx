@@ -5,14 +5,14 @@ import { faPlay, faPause, faStepBackward, faStepForward, faRandom, faRedo, faVol
 import { PlayerContext } from '../context/PlayerContext';
 
 const Player = () => {
-  const {track, seekBar, seekBg, playStatus, play, pause, time} = useContext(PlayerContext)
+  const {track, seekBar, seekBg, playStatus, play, pause, time, isMuted, toggleMute, volume, handleVolumeChange } = useContext(PlayerContext)
 
   return (
     <div className='h-[10%] bg-black flex justify-between items-center text-white px-4 mt-[-25px] pb-[15px]'>
       <div className="hidden lg:flex items-center gap-4">
         <img className='w-12' src={track.album?.images[0].url} alt="image" />
         <div>
-          <p className='text-[15px]'>{track.name}</p>
+          <p className='text-[15px] w-[250px]'>{track.name}</p>
           <p className='text-[13px]'>{track.artists?.map((artist) => artist.name).join(', ')}</p>
         </div>
       </div>
@@ -58,8 +58,8 @@ const Player = () => {
       </div>
 
       <div className="hidden lg:flex items-center gap-2">
-      <button>
-        <FontAwesomeIcon icon={faVolumeUp} />
+      <button onClick={toggleMute}>
+        <FontAwesomeIcon icon={isMuted ? faVolumeMute : faVolumeUp} />
       </button>
 
       <input
@@ -67,9 +67,9 @@ const Player = () => {
       min="0"
       max="1"
       step="0.01"
-      // value={volume}
-      // onChange={handleVolumeChange}
-      className="ml-2 accent-pink-700 h-1"
+      value={isMuted ? 0 : volume}
+      onChange={handleVolumeChange} 
+      className="ml-3 accent-pink-700 h-1"
       />
       </div>
     </div>
@@ -128,30 +128,30 @@ export default Player
 //     setCurrentTime(newTime);
 //   };
 
-//   const handleVolumeChange = (e) => {
-//     const newVolume = e.target.value;
-//     audioRef.current.volume = newVolume;
-//     setVolume(newVolume);
-//     if (newVolume == 0) {
-//       setIsMuted(true);
-//     } else {
-//       setIsMuted(false);
-//       setPreviousVolume(newVolume);
-//     }
-//   };
+  // const handleVolumeChange = (e) => {
+  //   const newVolume = e.target.value;
+  //   audioRef.current.volume = newVolume;
+  //   setVolume(newVolume);
+  //   if (newVolume == 0) {
+  //     setIsMuted(true);
+  //   } else {
+  //     setIsMuted(false);
+  //     setPreviousVolume(newVolume);
+  //   }
+  // };
 
-//   const toggleMute = () => {
-//     if (isMuted) {
-//       audioRef.current.volume = previousVolume;
-//       setVolume(previousVolume);
-//       setIsMuted(false);
-//     } else {
-//       setPreviousVolume(volume);
-//       audioRef.current.volume = 0;
-//       setVolume(0);
-//       setIsMuted(true);
-//     }
-//   };
+  // const toggleMute = () => {
+  //   if (isMuted) {
+  //     audioRef.current.volume = previousVolume;
+  //     setVolume(previousVolume);
+  //     setIsMuted(false);
+  //   } else {
+  //     setPreviousVolume(volume);
+  //     audioRef.current.volume = 0;
+  //     setVolume(0);
+  //     setIsMuted(true);
+  //   }
+  // };
 
 //   const formatTime = (time) => {
 //     const minutes = Math.floor(time / 60);
