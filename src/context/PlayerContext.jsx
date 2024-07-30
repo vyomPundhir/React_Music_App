@@ -12,6 +12,9 @@ const PlayerContextProvider = (props) => {
 
   const [track, setTrack] = useState({})
   const [playStatus, setPlayStatus] = useState(false)
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [previousVolume, setPreviousVolume] = useState(1);
   const [time, setTime] = useState(
     {
       currentTime: {
@@ -52,6 +55,30 @@ const PlayerContextProvider = (props) => {
         console.error('Error fetching track:', error);
       }
     }
+    const handleVolumeChange = (e) => {
+      const newVolume = e.target.value;
+      audioRef.current.volume = newVolume;
+      setVolume(newVolume);
+      if (newVolume == 0) {
+        setIsMuted(true);
+      } else {
+        setIsMuted(false);
+        setPreviousVolume(newVolume);
+      }
+    };
+  
+    const toggleMute = () => {
+      if (isMuted) {
+        audioRef.current.volume = previousVolume;
+        setVolume(previousVolume);
+        setIsMuted(false);
+      } else {
+        setPreviousVolume(volume);
+        audioRef.current.volume = 0;
+        setVolume(0);
+        setIsMuted(true);
+      }
+    };
 
     useEffect(() => {
       setTimeout(()=>{
@@ -78,9 +105,13 @@ const PlayerContextProvider = (props) => {
     seekBar,
     track, setTrack,
     playStatus, setPlayStatus,
+    volume, setVolume,
+    isMuted, setIsMuted,
     time, setTime,
     play, pause,
-    playWithId
+    playWithId,
+    toggleMute,
+    handleVolumeChange
   }
 
   return (
