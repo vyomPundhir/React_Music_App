@@ -9,7 +9,7 @@ const PlayerContextProvider = (props) => {
   const seekBg = useRef();
   const seekBar = useRef();
   const token = window.localStorage.getItem("token")
-
+  const [trackItems, setTrackItems] = useState([])
   const [track, setTrack] = useState({})
   const [playStatus, setPlayStatus] = useState(false)
   const [volume, setVolume] = useState(1);
@@ -80,35 +80,41 @@ const PlayerContextProvider = (props) => {
       }
     };
 
+    const redo = () => {
+      audioRef.current.currentTime = 0;
+      play();
+    };
+
     useEffect(() => {
-      const audio = audioRef.current;
-  
-      const handleTimeUpdate = () => {
-        seekBar.current.style.width = `${Math.floor((audio.currentTime / audio.duration) * 100)}%`;
-        setTime({
-          currentTime: {
-            second: Math.floor(audio.currentTime % 60),
-            minute: Math.floor(audio.currentTime / 60),
-          },
-          totalTime: {
-            second: Math.floor(audio.duration % 60),
-            minute: Math.floor(audio.duration / 60),
-          },
-        });
-      };
-  
-      const handleEnded = () => {
-        setPlayStatus(false);
-      };
-  
-      audio.ontimeupdate = handleTimeUpdate;
-      audio.onended = handleEnded;
-  
-      return () => {
-        audio.ontimeupdate = null;
-        audio.onended = null;
-      };
-    }, [audioRef]);
+      setTimeout(()=>{
+        audioRef.current.ontimeupdate = () => {
+          const currentTime = audioRef.current.currentTime;
+          const duration = audioRef.current.duration;
+
+          const currentSeconds = Math.floor(currentTime % 60);
+          const currentMinutes = Math.floor(currentTime / 60);
+          const totalSeconds = Math.floor(duration % 60);
+          const totalMinutes = Math.floor(duration / 60);
+
+          seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100)) + "%"
+          setTime({
+            currentTime: {
+              second: currentSeconds,
+              minute: currentMinutes,
+            },
+            totalTime: {
+              second: totalSeconds,
+              minute: totalMinutes,
+            },
+          });
+
+          // Check if the track has finished
+          if (currentSeconds===totalSeconds && currentMinutes===totalMinutes) {
+            setPlayStatus(false)
+          }
+        }
+      }, 1000)
+    }, [audioRef])
 
   const contextValue = {
     audioRef,
@@ -122,7 +128,8 @@ const PlayerContextProvider = (props) => {
     play, pause,
     playWithId,
     toggleMute,
-    handleVolumeChange
+    handleVolumeChange,
+    redo
   }
 
   return (
