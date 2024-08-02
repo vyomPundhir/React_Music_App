@@ -1,14 +1,18 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Header1 from './Header1';
 import TrackCard from './TrackCard';
+// import { PlayerContext } from '../context/PlayerContext';
+// import Player from './Player';
 
 const Album = () => {
 
+  // const {playWithId} = useContext(PlayerContext)
   const {id} = useParams();
   const [album, setAlbum] = useState(null)
   const [tracks, setTracks] = useState([])
+  // const [trackQueue, setTrackQueue] = useState([]);
   const token = window.localStorage.getItem("token")
 
   useEffect(() => {
@@ -30,6 +34,10 @@ const Album = () => {
     fetchAlbum()
   }, [id, token]);
 
+  // const playAllTracks = () => {
+  //   setTrackQueue(tracks); // Set all tracks as the track queue
+  // };
+
   if (!album) return <div>Loading...</div>;
 
   return (
@@ -38,7 +46,7 @@ const Album = () => {
       <Header1 />
 
       <section className="px-[15px] flex flex-col gap-[20px] overflow-y-auto h-[445px] scrollbar-thin scrollbar-track-black scrollbar-thumb-[#270a0a]">
-        
+
         <div className="flex flex-row items-center justify-start gap-[15px]">
 
           <img src={album.images[0].url} alt="image" className="w-[150px] h-[150px] rounded-md" />
@@ -66,6 +74,11 @@ const Album = () => {
           </div>
         </div>
 
+        {/* <button onClick={playAllTracks} className="bg-green-500 text-white px-4 py-2 rounded-lg">
+          Play All
+        </button> */}
+
+
         <hr className='h-[1px] border-[#5f5f5f]' />
 
         <div className="flex flex-col gap-[10px] px-[10px]">
@@ -80,14 +93,15 @@ const Album = () => {
           <div className=''>
           {tracks.length > 0 ? (
               tracks.map((track) => (
-                <Link to={`/track/${track.id}`} key={track.id} className='flex flex-col gap-[20px] pb-[10px]'>
+                <div key={track.id} className='flex flex-col gap-[20px] pb-[10px]'>
                   <TrackCard
                     trackNumber={tracks.indexOf(track)+1}
                     trackName={track.name}
                     trackArtists={track.artists.map((artist) => artist.name).join(', ')}
                     trackTime={millisToMinutesAndSeconds(track.duration_ms)}
+                    trackId={track.id}
                   />
-                </Link>
+                </div>
               ))
             ) : (
               <p>No tracks available</p>
@@ -98,7 +112,10 @@ const Album = () => {
         </div>
 
       </section>
-
+      {/* {
+        trackQueue.length>0 && <Player trackQueue={trackQueue} />
+      } */}
+      
     </section>
   );
 
