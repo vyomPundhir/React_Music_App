@@ -37,6 +37,25 @@ const PlayerContextProvider = (props) => {
       setPlayStatus(false)
     }
 
+    const playAlbumWithId = async (id) => {
+      try{
+        const response = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        setTrackItems(response.tracks.items)
+        console.log(response)
+        audioRef.current.oncanplay = () => {
+          audioRef.current.play();
+          setPlayStatus(true)
+        }
+      } catch (error) {
+        console.error('Error fetching track:', error);
+      }
+    }
+
     const playWithId = async (id) => {
       try {
         const response = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
@@ -46,7 +65,7 @@ const PlayerContextProvider = (props) => {
         });
   
         setTrack(response.data);
-        // console.log(response)
+        console.log(response)
         audioRef.current.oncanplay = () => {
           audioRef.current.play();
           setPlayStatus(true)
@@ -84,6 +103,10 @@ const PlayerContextProvider = (props) => {
       audioRef.current.currentTime = 0;
       play();
     };
+
+    const seekSong = async (e) => {
+      audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.offsetWidth)*audioRef.current.duration)
+    }
 
     useEffect(() => {
       setTimeout(()=>{
@@ -127,9 +150,11 @@ const PlayerContextProvider = (props) => {
     time, setTime,
     play, pause,
     playWithId,
+    playAlbumWithId,
     toggleMute,
     handleVolumeChange,
-    redo
+    redo,
+    seekSong
   }
 
   return (
