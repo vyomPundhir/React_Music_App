@@ -84,6 +84,7 @@ const Track = () => {
                     trackArtists={track.artists.map((artist) => artist.name).join(', ')}
                     trackTime={millisToMinutesAndSeconds(track.duration_ms)}
                     trackId={track.id}
+                    albumId={track.album?.id}
                   />
                 </div>
               
