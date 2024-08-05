@@ -4,16 +4,22 @@ import React, {useContext, useState} from 'react'
 import { Link } from 'react-router-dom';
 import { PlayerContext } from '../context/PlayerContext'
 
-const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId}) => {
+const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId, albumId}) => {
 
+  const {playAlbumWithId} = useContext(PlayerContext)
   const {playStatus, play, pause} = useContext(PlayerContext)
   const [isHovered, setIsHovered] = useState(false);
+  const handlePlayAlbumTrack = () => {
+    if (albumId) {
+      playAlbumWithId(albumId);
+    }
+  }
 
   return (
     <section className='flex flex-row justify-between px-[10px] hover:bg-[#280810] hover:shadow-[0px_5px_40px_-10px_#000000] rounded-md cursor-pointer' onMouseEnter={() => setIsHovered(true)}
     onMouseLeave={() => setIsHovered(false)}>
       <div className='flex flex-row justify-center items-center gap-[20px]'>
-        <div className={`${isHovered ? 'block' : 'hidden'}`}>
+        <div className={`${isHovered ? 'block' : 'hidden'}`}  onClick={handlePlayAlbumTrack}>
         {
             playStatus ?
             <button className='w-4 cursor-pointer' onClick={pause}>
