@@ -27,6 +27,8 @@ const PlayerContextProvider = (props) => {
       }
     })
 
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
     const play =()=>{
       audioRef.current.play();
       setPlayStatus(true)
@@ -36,6 +38,15 @@ const PlayerContextProvider = (props) => {
       audioRef.current.pause();
       setPlayStatus(false)
     }
+
+    const playTrackAtIndex = (index) => {
+      setTrack(trackItems[index]);
+      setCurrentTrackIndex(index);
+      audioRef.current.oncanplay = () => {
+        audioRef.current.play();
+        setPlayStatus(true);
+      };
+    };
 
     const playAlbumWithId = async (id) => {
       try{
@@ -47,10 +58,7 @@ const PlayerContextProvider = (props) => {
 
         setTrackItems(response.tracks.items)
         console.log(response)
-        audioRef.current.oncanplay = () => {
-          audioRef.current.play();
-          setPlayStatus(true)
-        }
+        playTrackAtIndex(0)
       } catch (error) {
         console.error('Error fetching track:', error);
       }
@@ -74,6 +82,7 @@ const PlayerContextProvider = (props) => {
         console.error('Error fetching track:', error);
       }
     }
+
     const handleVolumeChange = (e) => {
       const newVolume = e.target.value;
       audioRef.current.volume = newVolume;
@@ -132,18 +141,22 @@ const PlayerContextProvider = (props) => {
           });
 
           // Check if the track has finished
-          if (currentSeconds===totalSeconds && currentMinutes===totalMinutes) {
-            setPlayStatus(false)
+          if (currentTime >= duration) {
+            setPlayStatus(false);
+            if (currentTrackIndex < trackItems.length - 1) {
+              playTrackAtIndex(currentTrackIndex + 1);
+            }
           }
         }
       }, 1000)
-    }, [audioRef])
+    }, [audioRef, currentTrackIndex, trackItems])
 
   const contextValue = {
     audioRef,
     seekBg,
     seekBar,
     track, setTrack,
+    trackItems,
     playStatus, setPlayStatus,
     volume, setVolume,
     isMuted, setIsMuted,
