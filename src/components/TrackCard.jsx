@@ -6,9 +6,9 @@ import { PlayerContext } from '../context/PlayerContext'
 
 const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId, albumId}) => {
 
-  const {playAlbumWithId} = useContext(PlayerContext)
-  const {playStatus, play, pause} = useContext(PlayerContext)
+  const {playAlbumWithId, playStatus, play, pause, currentTrackIndex, trackItems } = useContext(PlayerContext)
   const [isHovered, setIsHovered] = useState(false);
+
   const handlePlayAlbumTrack = () => {
     if (albumId) {
       playAlbumWithId(albumId);
@@ -21,7 +21,7 @@ const TrackCard = ({trackNumber, trackName, trackArtists, trackTime, trackId, al
       <div className='flex flex-row justify-center items-center gap-[20px]'>
         <div className={`${isHovered ? 'block' : 'hidden'}`}  onClick={handlePlayAlbumTrack}>
         {
-            playStatus ?
+            playStatus && trackItems[currentTrackIndex]?.id === trackId ?
             <button className='w-4 cursor-pointer' onClick={pause}>
               <FontAwesomeIcon icon={faPause} />
             </button> :
